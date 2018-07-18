@@ -26,20 +26,12 @@ export class MultitokenImpl implements Multitoken {
     const toBalance: number = this.tokensAmount.get(toSymbol) || 0;
     const toWeight: number = this.tokensWeight.get(toSymbol) || 0;
 
-    const from = (fromBalance / ((fromWeight / this.maxWeight) * 100)) * 100;
-    const to = (toBalance / ((toWeight / this.maxWeight) * 100)) * 100;
-    let percent = (from - to) / (from + to + amount);
-
-    if (percent <= 0) {
-      percent = 1 - -percent;
-    }
-
     return [
       toBalance *
       amount *
       fromWeight /
-      ((fromBalance + amount) * toWeight) * percent,
-      percent
+      ((fromBalance + amount) * toWeight) * 0.998,
+      0
     ];
   }
 
